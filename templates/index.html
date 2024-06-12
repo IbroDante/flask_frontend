@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory and Suppliers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #343a40;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Inventory Items</h1>
+        <div class="content">
+            <ul id="items"></ul>
+        </div>
+
+        <h1>Suppliers</h1>
+        <div class="content">
+            <ul id="suppliers"></ul>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Online Store Management System
+    </footer>
+
+    <script>
+        async function fetchData() {
+            const itemsResponse = await fetch('/items');
+            const suppliersResponse = await fetch('/suppliers');
+            
+            const items = await itemsResponse.json();
+            const suppliers = await suppliersResponse.json();
+
+            const itemsList = document.getElementById('items');
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name}: ${item.description} - $${item.price}`;
+                itemsList.appendChild(li);
+            });
+
+            const suppliersList = document.getElementById('suppliers');
+            suppliers.forEach(supplier => {
+                const li = document.createElement('li');
+                li.textContent = `${supplier.name} (${supplier.contact_information})`;
+                suppliersList.appendChild(li);
+            });
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
