@@ -9,7 +9,7 @@ API_URL_SUPPLIERS = "http://127.0.0.1:8000/api/suppliers/"
 @app.route('/')
 def index():
     return render_template('index.html')
-
+ 
 @app.route('/items')
 def get_items():
     response = requests.get(API_URL_ITEMS)
